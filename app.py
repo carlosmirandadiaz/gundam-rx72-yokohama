@@ -58,8 +58,8 @@ def traducir_a_japones(texto):
     """
 
     try:
-        # Llamar a la API de OpenAI
-        respuesta = openai.ChatCompletion.create(
+        # Llamar a la API de OpenAI usando el nuevo formato
+        respuesta = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "Eres un traductor experto en japonés. Devuelve únicamente JSON válido sin explicaciones."},
@@ -75,20 +75,10 @@ def traducir_a_japones(texto):
         json_respuesta = json.loads(contenido)
         return json_respuesta
 
-    except openai.OpenAIError as e:
-        # Manejar errores de la API de OpenAI
-        print(f"Error en OpenAI: {e}")
-        return {"error": f"Error en OpenAI: {str(e)}"}
-
-    except json.JSONDecodeError:
-        # Manejar errores de decodificación JSON
-        print("Error al convertir la respuesta en JSON")
-        return {"error": "La respuesta de OpenAI no es un JSON válido. Intenta de nuevo."}
-
     except Exception as e:
-        # Manejar cualquier otro error inesperado
-        print(f"Error inesperado: {e}")
-        return {"error": f"Error inesperado: {str(e)}"}
+        # Manejar errores de la API de OpenAI o cualquier otro error
+        print(f"Error: {e}")
+        return {"error": f"Error: {str(e)}"}
 
 # Ruta para servir el frontend
 @app.route("/")

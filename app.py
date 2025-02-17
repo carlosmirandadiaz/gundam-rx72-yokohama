@@ -48,7 +48,7 @@ def traducir():
     return jsonify(resultado)  # Ahora enviamos JSON real
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))  # Obtiene el puerto de Railway o usa 5000 como fallback
+    port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
 
     

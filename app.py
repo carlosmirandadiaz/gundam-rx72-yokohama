@@ -19,7 +19,7 @@ client = openai.OpenAI(api_key=api_key)
 
 def traducir_a_japones(texto):
     """
-    Traduce una palabra o frase en español a japonés, incluyendo hiragana, romanji, traducción y pronunciación.
+    Traduce una palabra o frase en español a japonés, incluyendo hiragana, romanji, traducción y una guía fonética.
     
     Parámetros:
         texto (str): La palabra o frase en español que se desea traducir.
@@ -29,7 +29,7 @@ def traducir_a_japones(texto):
     """
     # Definir el prompt con instrucciones claras y ejemplos
     prompt = f"""
-    Traduce la siguiente palabra o frase en español a japonés, incluyendo hiragana, romanji, traducción y pronunciación. 
+    Traduce la siguiente palabra o frase en español a japonés, incluyendo hiragana, romanji, traducción y una guía fonética para pronunciar correctamente el hiragana.
     Devuelve el resultado en formato JSON.
 
     **Reglas importantes:**
@@ -43,15 +43,19 @@ def traducir_a_japones(texto):
          - "Perdón" → ごめんなさい (gomen nasai)
          - "Lo siento" → すみません (sumimasen)
 
-    3. **Formato de respuesta JSON**:
+    3. **Guía fonética**:
+       - Proporciona una guía fonética en español para ayudar a pronunciar el hiragana.
+       - Ejemplo: こんにちは → "Koh-nnee-chee-wah"
+
+    4. **Formato de respuesta JSON**:
        {{
            "hiragana": "Texto en hiragana",
            "romanji": "Transliteración en romanji",
            "traduccion": "Traducción en español",
-           "pronunciacion": "Pronunciación en romanji"
+           "pronunciacion": "Guía fonética en español"
        }}
 
-    4. **Precisión**:
+    5. **Precisión**:
        - No agregues explicaciones adicionales. Devuelve **EXCLUSIVAMENTE JSON válido**.
 
     **Palabra/frase a traducir:** "{texto}"

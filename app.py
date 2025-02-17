@@ -124,7 +124,8 @@ def generar_audio(texto_japones, voz="alloy"):
         BytesIO: Un objeto BytesIO con el archivo de audio en formato MP3.
     """
     try:
-        response = client.audio.speech.create(
+        # Usar with_streaming_response para evitar el warning
+        response = client.audio.speech.with_streaming_response.create(
             model="tts-1",
             voice=voz,
             input=texto_japones
@@ -132,7 +133,8 @@ def generar_audio(texto_japones, voz="alloy"):
 
         # Guardar el audio en un objeto BytesIO
         audio_buffer = BytesIO()
-        response.stream_to_file(audio_buffer)
+        for chunk in response.iter_bytes():
+            audio_buffer.write(chunk)
         audio_buffer.seek(0)  # Rebobinar el buffer para que pueda ser leído
         return audio_buffer
 

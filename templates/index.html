@@ -11,6 +11,11 @@
     <input type="text" id="texto" placeholder="Escribe una palabra o frase">
     <button onclick="traducir()">Traducir</button>
     <div id="resultado"></div>
+    <!-- Reproductor de audio -->
+    <audio id="audioPlayer" controls style="margin-top: 20px; display: none;">
+        <source id="audioSource" src="" type="audio/mpeg">
+        Tu navegador no soporta la reproducción de audio.
+    </audio>
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>

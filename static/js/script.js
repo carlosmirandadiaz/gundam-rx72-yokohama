@@ -23,5 +23,21 @@ async function traducir() {
             <p><strong>Traducción:</strong> ${datos.traduccion}</p>
             <p><strong>Pronunciación:</strong> ${datos.pronunciacion}</p>
         `;
+
+        // Reproducir el audio
+        const audioPlayer = document.getElementById("audioPlayer");
+        const audioSource = document.getElementById("audioSource");
+
+        if (datos.audio_url) {
+            audioSource.src = datos.audio_url;
+            audioPlayer.load();
+            audioPlayer.style.display = "block";
+            audioPlayer.play().catch(error => {
+                console.error("Error al reproducir el audio:", error);
+                document.getElementById("resultado").innerHTML += `<p style="color: red;">El archivo de audio ha expirado. Por favor, realiza una nueva búsqueda.</p>`;
+            });
+        } else {
+            audioPlayer.style.display = "none";
+        }
     }
 }

@@ -10,10 +10,13 @@ CORS(app)
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
+# Crear cliente OpenAI
+client = openai.OpenAI()
+
 def traducir_a_japones(texto):
     prompt = f"Convierte '{texto}' a Hiragana, Romanji y Español con pronunciación en Romanji. Devuelve SOLO un JSON válido con las claves 'hiragana', 'romanji', 'traduccion', 'pronunciacion'."
 
-    respuesta = openai.ChatCompletion.create(
+    respuesta = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "Eres un traductor experto en japonés. Devuelve únicamente JSON válido."},
@@ -21,7 +24,7 @@ def traducir_a_japones(texto):
         ]
     )
 
-    contenido = respuesta["choices"][0]["message"]["content"]
+    contenido = respuesta.choices[0].message.content  # Nueva forma de acceder al contenido
     print("Respuesta de OpenAI:", contenido)  # Para depuración
 
     try:
@@ -31,6 +34,7 @@ def traducir_a_japones(texto):
     except json.JSONDecodeError:
         print("Error al convertir la respuesta en JSON")
         return {"error": "La respuesta de OpenAI no es un JSON válido"}
+
 
 @app.route("/traducir", methods=["POST"])
 def traducir():

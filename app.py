@@ -1,10 +1,10 @@
 import os
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import openai
 import json
 from flask_cors import CORS
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="static", template_folder="templates")
 CORS(app)
 
 # Obtiene la API Key desde las variables de entorno
@@ -30,10 +30,9 @@ def traducir_a_japones(texto):
         )
 
         contenido = respuesta.choices[0].message.content
-        print("Respuesta de OpenAI:", contenido)  # Para depuración
+        print("Respuesta de OpenAI:", contenido)
 
-        # Convierte la respuesta en un objeto JSON válido
-        json_respuesta = json.loads(contenido.replace("'", '"'))  
+        json_respuesta = json.loads(contenido.replace("'", '"'))
         return json_respuesta
 
     except openai.OpenAIError as e:
@@ -44,6 +43,12 @@ def traducir_a_japones(texto):
         print("Error al convertir la respuesta en JSON")
         return {"error": "La respuesta de OpenAI no es un JSON válido"}
 
+# Ruta para servir el frontend
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+# Ruta para procesar la traducción
 @app.route("/traducir", methods=["POST"])
 def traducir():
     datos = request.json
@@ -52,8 +57,8 @@ def traducir():
         return jsonify({"error": "Texto vacío"}), 400
 
     resultado = traducir_a_japones(texto)
-    print("Respuesta enviada al frontend:", resultado)  # Depuración
-    return jsonify(resultado)  # Ahora enviamos JSON real
+    print("Respuesta enviada al frontend:", resultado)
+    return jsonify(resultado)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

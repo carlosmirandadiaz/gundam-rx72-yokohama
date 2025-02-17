@@ -1,20 +1,69 @@
+/* Estilos generales */
 body {
     font-family: Arial, sans-serif;
     text-align: center;
     margin: 50px;
-    background-color: #f4f4f4;
+    background-color: #0047AB; /* Azul principal */
+    color: #FFFFFF; /* Texto en blanco */
 }
-input, button {
+
+/* Título principal */
+h1 {
+    font-size: 28px;
+    color: #FFD700; /* Amarillo */
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Entrada de texto y botón */
+input {
     padding: 10px;
     margin: 10px;
     font-size: 16px;
+    border: 2px solid #FFD700; /* Amarillo */
+    border-radius: 5px;
+    background-color: #FFFFFF; /* Fondo blanco */
+    color: #0047AB; /* Texto azul */
+    text-align: center;
+    outline: none;
 }
+
+input::placeholder {
+    color: #0047AB;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #ED1C24; /* Rojo */
+    color: #FFFFFF; /* Texto blanco */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+button:hover {
+    background-color: #FFD700; /* Amarillo */
+    color: #0047AB; /* Azul */
+}
+
+/* Estilos del resultado */
 #resultado {
     margin-top: 20px;
     font-size: 18px;
-    background: white;
+    background: #FFFFFF; /* Fondo blanco */
     padding: 15px;
     border-radius: 10px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
     display: inline-block;
+    color: #0047AB; /* Azul */
+    border: 2px solid #ED1C24; /* Rojo */
+}
+
+/* Estilos para errores */
+p.error {
+    color: #ED1C24; /* Rojo */
+    font-weight: bold;
 }

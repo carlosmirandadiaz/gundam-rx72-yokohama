@@ -7,8 +7,8 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-# Configura tu API Key de OpenAI
-openai.api_key = "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"
+
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def traducir_a_japones(texto):
     prompt = f"Convierte '{texto}' a Hiragana, Romanji y Español con pronunciación en Romanji. Devuelve SOLO un JSON válido con las claves 'hiragana', 'romanji', 'traduccion', 'pronunciacion'."

@@ -30,7 +30,7 @@ def traducir_a_japones(texto):
         )
 
         contenido = respuesta.choices[0].message.content
-        print("Respuesta de OpenAI:", contenido)
+        print("Respuesta de OpenAI:", contenido)  
 
         json_respuesta = json.loads(contenido.replace("'", '"'))
         return json_respuesta

@@ -4,28 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gundam RX-72 Yokohama - Traductor Japonés</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 50px;
-            background-color: #f4f4f4;
-        }
-        input, button {
-            padding: 10px;
-            margin: 10px;
-            font-size: 16px;
-        }
-        #resultado {
-            margin-top: 20px;
-            font-size: 18px;
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-            display: inline-block;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <h1>Gundam RX-72 Yokohama - Traductor Japonés</h1>
@@ -33,34 +12,6 @@
     <button onclick="traducir()">Traducir</button>
     <div id="resultado"></div>
 
-    <script>
-        async function traducir() {
-            let texto = document.getElementById("texto").value;
-            if (!texto) {
-                alert("Por favor, ingresa un texto.");
-                return;
-            }
-
-            let respuesta = await fetch("/traducir", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ texto: texto })
-            });
-
-            let datos = await respuesta.json();
-            console.log("Respuesta de la API:", datos);  // Depuración
-
-            if (datos.error) {
-                document.getElementById("resultado").innerHTML = `<p style="color: red;"><strong>Error:</strong> ${datos.error}</p>`;
-            } else {
-                document.getElementById("resultado").innerHTML = `
-                    <p><strong>Hiragana:</strong> ${datos.hiragana}</p>
-                    <p><strong>Romanji:</strong> ${datos.romanji}</p>
-                    <p><strong>Traducción:</strong> ${datos.traduccion}</p>
-                    <p><strong>Pronunciación:</strong> ${datos.pronunciacion}</p>
-                `;
-            }
-        }
-    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

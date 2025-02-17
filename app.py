@@ -75,9 +75,18 @@ def traducir_a_japones(texto):
         contenido = respuesta.choices[0].message.content.strip()
         print("Respuesta de OpenAI:", contenido)  # Para depuración
 
+        # Preprocesar la respuesta para eliminar ```json``` o cualquier texto no deseado
+        if contenido.startswith("```json") and contenido.endswith("```"):
+            contenido = contenido[7:-3].strip()  # Eliminar ```json y las triples comillas
+
         # Verificar si la respuesta es un JSON válido
         json_respuesta = json.loads(contenido)
         return json_respuesta
+
+    except json.JSONDecodeError:
+        # Manejar errores de decodificación JSON
+        print("Error: La respuesta de OpenAI no es un JSON válido.")
+        return {"error": "La respuesta de OpenAI no es un JSON válido. Intenta de nuevo."}
 
     except Exception as e:
         # Manejar errores de la API de OpenAI o cualquier otro error
